@@ -3,6 +3,7 @@
   lib,
   pkgs,
   fetchFromGitHub,
+  fetchpatch,
   buildLinux,
   rpiVersion,
   ...
@@ -48,6 +49,13 @@ in
     kernelPatches = with pkgs.kernelPatches; [
       bridge_stp_helper
       request_key_helper
+      {
+        name = "tools-linux-types-add-u128";
+        patch = fetchpatch {
+          url = "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=10a47fb67340bca274276faf855d7d460afd9a7a";
+          hash = "sha256-w6ZnvodW2kS3bqtZVvVN5qDt1Zc7fJvnywki3MBsER0=";
+        };
+      }
     ];
 
     # Override nixpkgs common-config.nix defaults that conflict with the RPi vendor defconfigs.
